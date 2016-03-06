@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>myBlog</title>
+	<script type="text/javascript" src="/javascripts/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="/javascripts/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+	<link type = "text/css" rel="stylesheet" href="/stylesheets/main.css">
+</head>
+<body>
+	<div class="top">
+	<header>
+		<div class="container">
+			<div class="logo">
+				<a id="logoTitle" href="/">学习笔记</a>
+			</div>
+		</div>
+	</header>
+<div class="main">
+	<%- include catalogue %>
+	<%if((post.categorychil).length > 0){%>
+		<div class="cateChi">
+			<p>文章分类</p>
+			<ul class="cateChi_list">
+				<% post.categorychil.forEach(function(cateCh, index){ %>
+				<li class="list"><a href= <%= "/articles/" + category  + "/" + cateCh %> ><%= cateCh %></a></li>
+				<%}) %>
+			</ul>
+		</div>
+	<%}%>
+	<div class="container">
+		<div class="content">	
+			<% if(Array.isArray(post.doc)){
+			if( (post.doc).length>0){
+			 post.doc.forEach(function(post,index){ %>
+			<div class="post_catalogue col_dashed_1">
+				<h1 class="post_title"><a href=<%= "/articles/" + post.category + "/" + post.category_chil + "/" + post.id %> ><%= post.title %></a></h1>
+				<div class="post_desc col_txt_1"><%= post.time.minute %></div>
+				<div class="post_abstr col_txt_2"><%- (post.post).substr(0,120) %><a href=<%= "/articles/" + post.category + "/" + post.category_chil + "/" + post.id %> > 查看全文>> </a></div>
+			</div>
+			<% }) %>
+			<div class="post_page">
+				<%if(isFirst){%>
+				<a id="prepage" class="disable">上页</a>
+			<%}else{%>
+				<a id="prepage" href="?pg=<%= page-1 %>&tm=$gt:<%= timefir %>">上页</a>
+				<%}%>
+				<span class="pageCount" dataCou=<%= pageCount %> dataNum=<%= page %> dataTm=<%= timelas %>>
+				</span>
+				<%if(isLast){%>
+				<a id="nextpage"  class="disable">下页</a>
+			<%}else{%>
+				<a id="nextpage" href="?pg=<%= page+1 %>&tm=$lt:<%= timelas %>">下页</a>
+			<%}%>
+			</div>
+			<% }else{%>
+			<p>还没有文章</p>
+			<%}}else{  if(post.doc instanceof Object && (post.doc).hasOwnProperty('post')){%>
+			<div class="post_header col_dashed_1">
+				<h1 class="post_title"><%= post.doc.title %></h1>
+				<div class="post_desc col_txt_1"><%= post.doc.time.minute %></div>
+			</div>
+			<div class="post_content col_txt_2">
+				<%- post.doc.post %>
+			</div>
+			<ul class="post_subling">
+				<%if(postP.doc !=undefined){%>
+				<li class="prepost">上一篇：<a href=<%= "/articles/" + postP.doc.category + "/" + postP.doc.category_chil + "/" + postP.doc.id %>><%= postP.doc.title %></a></li>
+				<%}%>
+				<%if(postN.doc !=undefined){%>
+				<li class="nextpost">下一篇：<a href=<%= "/articles/" + postN.doc.category + "/" + postN.doc.category_chil + "/" + postN.doc.id %> ><%= postN.doc.title %></a></li>
+				<%}%>
+			</ul>
+			<%}else{%>
+			<p>文章为空~</p>
+			<%}} %> 
+		</div>
+	</div>
+</div>
+<%- include footer %>
+</div>
+</body>
+</html>

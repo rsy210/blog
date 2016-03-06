@@ -1,0 +1,59 @@
+.post .post_content textarea{
+	width: 80%;
+	height: 400px;
+}
+
+#uploadImg_dialog{
+	
+	display: none;
+	position: fixed;z-index: 900;
+	top: 0;left: 0;
+	background: #fff;
+}
+
+.upImg_header{
+	padding: 10px 2px;
+	border-bottom: 1px solid #eee;
+}
+.upImg_close{
+	float: right;border: 0px;
+	font-size: 20.5px;font-weight: bold;
+	line-height: 1;color: #3F3F3F;
+	opacity: 0.2;filter: alpha(opacity=20);
+	margin-top: 0px;margin-right: 0px;
+	background: transparent none repeat scroll 0% 0%;
+	cursor: pointer;
+}
+.upImg_close:hover,.upImg_close:focus{
+	opacity: 0.5;filter: alpha(opacity=50);
+}
+.upImg_title{
+	text-align: center;
+	font-size: 18px;font-weight: 100;
+}
+.upImg_content{
+	margin: 10px 20px;
+}
+.upImg_show{margin: 20px 0;}
+.upImg_show img{
+	max-width: 160px;max-height: 160px;
+	margin: 0 auto;
+	display: none;
+}
+.upImg_foot{
+	padding: 10px 20px;
+	text-align: center;
+	border-top: 1px solid #eee;
+}
+.upImg_show img{
+	width: 160px;height: 160px;
+	margin: 0 auto;
+	display: none;
+}
+
+.mask{
+	width: 100%;height: 100%;
+	background: #000;opacity: 0.4;filter:Alpha(opacity=40);/*ie6*/
+	position: fixed;z-index: 800;
+	top: 0px;left: 0px;
+}

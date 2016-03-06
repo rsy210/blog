@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>myBlog</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+	<link type = "text/css" rel="stylesheet" href="/stylesheets/post.css">
+	<script type="text/javascript" src="/javascripts/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="/javascripts/jquery.form.js"></script>
+	<script type="text/javascript" src="/javascripts/post.js"></script>
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="logo">
+				<a id="logoTitle" href="">学习笔记</a>
+			</div>
+		</div>
+	</header>
+<div class="main">
+	<div class="container">
+		<div class="catalogue">
+			<form class="post" method="post" action="/post">
+				<div>
+					标题：
+					<input type="text" name="title"/>
+					<input type="submit" value="发表"/>
+				</div>
+				<div>
+					<button type="button" id="uploadImg">上传图片</button>
+					父分类：
+					<select name="category">
+						<option value="JavaScript">JavaScript</option>
+						<option value="Html、Css">Html、Css</option>
+						<option value="NodeJs">NodeJs</option>
+						<option value="Java">Java</option>
+					</select>
+					子分类：
+					<input name="category_chil">
+				</div>
+				<div class="post_content">
+					<textarea class="post_text" name="post"></textarea><br>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="uploadImg_dialog">
+	<div class="upImg_header">
+		<button class="upImg_close">×</button>
+		<h4 class="upImg_title">插入图片</h4>
+	</div>
+	<div class="upImg_content">
+		 <form id="upForm" method="post" action="/upload" enctype="multipart/form-data" > 
+			<input class="updImg" type="file" name="updImg"/>
+			<button class="submit" type="submit">上传</button>
+	 	</form> 
+		<!-- <iframe id='frameFile' name='frameFile' style='display: none;'></iframe> -->
+		<div class="upImg_show"><img /></div>
+	</div>
+	<div class="upImg_foot">
+		<button class="upImg_cancel">取消</button>
+		<button class="upImg_confirm">确定</button>
+	</div>
+</div>
+</body>
+</html>

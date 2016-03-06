@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>myBlog</title>
+	<script type="text/javascript" src="/javascripts/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="/javascripts/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+	<link type = "text/css" rel="stylesheet" href="/stylesheets/main.css">
+</head>
+<body>
+	<div class="top">
+	<header>
+		<div class="container">
+			<div class="logo">
+				<a id="logoTitle" href="/">学习笔记</a>
+			</div>
+		</div>
+	</header>
+<div class="main">
+		<%- include catalogue %>
+		<div class="container">
+			
+			<%if(pvNs.length > 0){%>
+				<div class="post_top">
+				<%pvNs.forEach(function(pvn){%>
+					<div class="post_pv">
+						<div class="pv_title"><a href=<%= "/articles/" + pvn.category + "/" + pvn.category_chil + "/" + pvn.id %> ><%= pvn.title %></a></div>
+						<div class="post_desc col_txt_1"><span>发表时间：<%= pvn.time.minute %>&nbsp;&nbsp;&nbsp;访问量:<%= pvn.pv %></span></div>
+						<%if((pvn.post).indexOf('<img') != -1){%>
+						<div class="pv_content">
+							<div class="imgf"><a href=<%= "/articles/" + pvn.category + "/" + pvn.category_chil + "/" + pvn.id %>><%- pvn.post.substring(pvn.post.indexOf('<img'), pvn.post.indexOf('.jpg"/>') + 7) %></a></div>
+							<div class="post_abstr col_txt_2"><%- (pvn.post).substr(0,120) %><a href=<%= "/articles/" + pvn.category + "/" + pvn.category_chil + "/" + pvn.id %> > 查看全文>> </a></div>
+						</div>
+						<%}else{%>
+						<div class="pv_content">
+							<div class="post_abstr col_txt_2"><%- (pvn.post).substr(0,500) %><a href=<%= "/articles/" + pvn.category + "/" + pvn.category_chil + "/" + pvn.id %> > 查看全文>> </a></div>
+						</div>
+						<%}%>
+					</div>
+
+				<%})%>
+			</div>
+				<div class="add_post"><div class="all_post_count">共<%= total %>篇文章,<span>已加载篇<a class="has_post_num">10</a></span></div><button>加载更多</button></div>
+				<%}else{%>
+				<div class="post_top">还没有文章</div>
+				<%}%>
+		</div>
+</div>
+<%- include footer %>
+ </div>
+</body>
+</html>
