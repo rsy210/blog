@@ -1,0 +1,17 @@
+{
+  "name": "blog",
+  "description": "myblog",
+  "scripts": {
+  },
+  "env": {
+    "config.assets.enabled": "true"
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "urn:buildpack:heroku/nodejs"
+    }
+  ]
+}
