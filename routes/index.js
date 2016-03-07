@@ -37,7 +37,12 @@ var pvNs2 = [];
    /* pvNs2 = pvNs2.slice(0,10);
     console.log(pvNs2);*/
     pvNs = docs;
+    var len = pvNs.length;
+    if(len >= 10){
     var pvNs_ten = pvNs.splice(0,10);
+  }else{
+    var pvNs_ten = pvNs.splice(0,len);
+  }
      res.render('index',{
       pvNs:pvNs_ten,
       total:total
