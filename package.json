@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "npm start"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -17,5 +17,8 @@
     "morgan": "~1.6.1",
     "multer": "^1.1.0",
     "serve-favicon": "~2.3.0"
-  }
+  },
+  "npm":"~2.14.7",
+  "node":"~4.2.2"
+
 }
