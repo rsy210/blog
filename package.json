@@ -16,7 +16,7 @@
     "multer": "^1.1.0",
     "serve-favicon": "~2.3.0"
   },
-  "npm":"~2.14.7",
-  "node":"~4.2.2"
+  "engines.npm":"~2.14.7",
+  "engines.node":"~4.2.2"
 
 }
