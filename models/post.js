@@ -1,4 +1,5 @@
-var mongodb = require('./db');
+var mongodb = require('mongodb');
+var settings = require('../settings');
 var markdown = require('markdown').markdown;
 
 function Post(id,title,category,category_chil,post){
@@ -36,20 +37,20 @@ var post ={
 };
 
 //打开数据库
-mongodb.open(function(err,db){
+mongodb.MongoClient.connect(settings.url, function(err,db){
 	if(err){return callback(err);}
 
 	//读取post集合
 	db.collection('posts',function(err,collection){
 		if(err){
-			mongodb.close();
+			db.close();
 			return callback(err);
 		}
 		//将文档插入到posts
 		collection.insert(post,{
 			safe:true
 		},function(err,doc){
-			mongodb.close();
+			db.close();
 			if(err){return callback(err);}//失败返回err
 			callback(null,doc);//返回err为null
 		});
@@ -62,12 +63,12 @@ mongodb.open(function(err,db){
 //读取全部文章及相关信息
 Post.getAll = function(callback){
 	//打开数据库
-	mongodb.open(function(err,db){
+	mongodb.MongoClient.connect(settings.url, function(err,db){
 		if(err){return callback(err);}
 		//读取posts集合
 		db.collection('posts',function(err,collection){
 			if(err){
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			var query={};
@@ -77,7 +78,7 @@ Post.getAll = function(callback){
 			collection.find(query).sort({
 				pv:-1
 			}).toArray(function(err,docs){
-				mongodb.close();
+				db.close();
 				if(err){return callback(err);}//失败返回err
 				docs.forEach(function(doc){
 					if(doc.post != undefined){
@@ -95,12 +96,12 @@ Post.getAll = function(callback){
 //读取某类全部文章及相关信息
 Post.getTenByCategory = function(category, time, page, callback){
 	//打开数据库
-	mongodb.open(function(err,db){
+	mongodb.connect(settings.url, function(err,db){
 		if(err){console.log("err1:"+err);return callback(err);}
 		//读取posts集合
 		db.collection('posts',function(err,collection){
 			if(err){
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			var query={"category": category};
@@ -130,7 +131,7 @@ Post.getTenByCategory = function(category, time, page, callback){
 			collection.find(query, lim).sort({
 				time:-1
 			}).toArray(function(err,docs){
-				mongodb.close();
+				db.close();
 				if(err){console.log("err4:"+err);return callback(err);}//失败返回err
 				docs.forEach(function(doc){
 					doc.post = markdown.toHTML(doc.post);
@@ -144,12 +145,12 @@ Post.getTenByCategory = function(category, time, page, callback){
 //读取某类全部文章及相关信息
 Post.getTenByCategoryChil = function(category,category_chil,  time, page, callback){
 	//打开数据库
-	mongodb.open(function(err,db){
+	mongodb.connect(settings.url, function(err,db){
 		if(err){return callback(err);}
 		//读取posts集合
 		db.collection('posts',function(err,collection){
 			if(err){
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			var query={"category": category,
@@ -183,7 +184,7 @@ Post.getTenByCategoryChil = function(category,category_chil,  time, page, callba
 			collection.find(query, lim).sort({
 				time:-1
 			}).toArray(function(err,docs){
-				mongodb.close();
+				db.close();
 				if(err){return callback(err);}//失败返回err
 				docs.forEach(function(doc){
 					doc.post = markdown.toHTML(doc.post);
@@ -201,14 +202,14 @@ Post.getTenByCategoryChil = function(category,category_chil,  time, page, callba
 //获取一篇文章
 Post.getOne = function( title, callback){
 	//打开数据库
-	mongodb.open(function(err, db){
+	mongodb.connect(settings.url, function(err, db){
 		if(err){
 			return callback(err);
 		}
 		//读取posts集合
 		db.collection('posts', function(err, collection){
 			if(err){
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			//根据时间，文章名进行查询
@@ -216,7 +217,7 @@ Post.getOne = function( title, callback){
 				//"time.day" : day,
 				"title" : title
 			}, function(err,doc){
-				mongodb.close();
+				db.close();
 				if(err){return callback(err);}
 				doc.post = markdown.toHTML(doc.post);
 				callback(null, doc);//返回查询到的文章
@@ -228,14 +229,14 @@ Post.getOne = function( title, callback){
 //获取某类一篇文章
 Post.getOneByCategoryId = function(category, titleId, callback){
 	//打开数据库
-	mongodb.open(function(err, db){
+	mongodb.connect(settings.url, function(err, db){
 		if(err){
 			return callback(err);
 		}
 		//读取posts集合
 		db.collection('posts', function(err, collection){
 			if(err){
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			//根据时间，文章名进行查询
@@ -248,7 +249,7 @@ Post.getOneByCategoryId = function(category, titleId, callback){
 				
 				if(err){return callback(err);}
 				doc.post = markdown.toHTML(doc.post);
-				mongodb.close();
+				db.close();
 				callback(null, doc);//返回查询到的文章
 			});
 		});
@@ -260,14 +261,14 @@ Post.getOneByCategoryId = function(category, titleId, callback){
 //获取某类一篇文章
 Post.getOneByCategoryChil = function(category, category_chil, titleId, callback){
 	//打开数据库
-	mongodb.open(function(err, db){
+	mongodb.connect(settings.url, function(err, db){
 		if(err){
 			return callback(err);
 		}
 		//读取posts集合
 		db.collection('posts', function(err, collection){
 			if(err){
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			var query = {
@@ -292,12 +293,12 @@ Post.getOneByCategoryChil = function(category, category_chil, titleId, callback)
 						if (docP != undefined) {docP.post = markdown.toHTML(docP.post);};
 						if (docN != undefined) {docN.post = markdown.toHTML(docN.post);};
 					
-				if(err){mongodb.close();
+				if(err){db.close();
 					return callback(err);}
 					if (doc) {
 						collection.update(query, {
 							$inc:{"pv":1}},function(err){
-								mongodb.close();
+								db.close();
 								if(err){return callback(err);}
 							});
 
@@ -328,21 +329,21 @@ Post.getOneByCategoryChil = function(category, category_chil, titleId, callback)
 //获取某类一篇文章
 Post.getOneById = function(titleId, callback){
 	//打开数据库
-	mongodb.open(function(err, db){
+	mongodb.connect(settings.url, function(err, db){
 		if(err){
 			return callback(err);
 		}
 		//读取posts集合
 		db.collection('posts', function(err, collection){
 			if(err){
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			//根据时间，文章名进行查询
 			collection.findOne({
 				id:titleId
 			}, function(err,doc){
-				mongodb.close();
+				db.close();
 				callback(null, doc);//返回查询到的文章
 			});
 		});

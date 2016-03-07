@@ -41,7 +41,7 @@
 
 				<%})%>
 			</div>
-				<div class="add_post"><div class="all_post_count">共<%= total %>篇文章,<span>已加载篇<a class="has_post_num"><- total<10 ? total : 10></a></span></div><button>加载更多</button></div>
+				<div class="add_post"><div class="all_post_count">共<%= total %>篇文章,<span>已加载<a class="has_post_num"><%if(total<10 ){%><%= total %><%}else{%>10<%}%></a>篇</span></div><button>加载更多</button></div>
 				<%}else{%>
 				<div class="post_top">还没有文章</div>
 				<%}%>
