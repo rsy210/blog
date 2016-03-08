@@ -2,9 +2,16 @@
   "name": "blog",
   "description": "myblog",
   "scripts": {
+       "postdeploy":"rake db:setup && bin/bootstrap"
   },
   "env": {
-    "config.assets.enabled": "true"
+    "config.assets.enabled": "true",
+     "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
+    }
   },
   "addons": [
 
